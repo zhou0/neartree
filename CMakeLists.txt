@@ -11,13 +11,20 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 find_path(CVECTOR_INCLUDE_DIR CVector.h)
 find_library(CVECTOR_LIBRARY CVector)
 
+# Handle math library on non-Windows platforms
+if(NOT MSVC)
+    set(MATH_LIB m)
+else()
+    set(MATH_LIB "")
+endif()
+
 if(CVECTOR_INCLUDE_DIR AND CVECTOR_LIBRARY)
     message(STATUS "Found CVector: ${CVECTOR_INCLUDE_DIR}, ${CVECTOR_LIBRARY}")
     include_directories(${CVECTOR_INCLUDE_DIR})
 
     # CNearTree Library
     add_library(CNearTree CNearTree.c)
-    target_link_libraries(CNearTree ${CVECTOR_LIBRARY} m)
+    target_link_libraries(CNearTree ${CVECTOR_LIBRARY} ${MATH_LIB})
 
     # C Examples/Tests
     add_executable(CMain main.c)
@@ -41,15 +48,15 @@ endif()
 set(CPP_COMMON_SRC v.cpp)
 
 add_executable(CPPMain main.cpp ${CPP_COMMON_SRC})
-target_link_libraries(CPPMain m)
+target_link_libraries(CPPMain ${MATH_LIB})
 
 add_executable(CPPMain_Flip main_flip.cpp ${CPP_COMMON_SRC})
-target_link_libraries(CPPMain_Flip m)
+target_link_libraries(CPPMain_Flip ${MATH_LIB})
 
 # CPPNearTreeTest variants
 macro(add_cpp_test_variant name)
     add_executable(${name} CNearTreeTest.cpp ${CPP_COMMON_SRC})
-    target_link_libraries(${name} m)
+    target_link_libraries(${name} ${MATH_LIB})
     if(ARGN)
         target_compile_definitions(${name} PRIVATE ${ARGN})
     endif()
