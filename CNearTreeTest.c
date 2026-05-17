@@ -2500,7 +2500,7 @@ void testStrings( void )
         fprintf(stdout, "CNearTreeTest: testStrings: CNearTreeCreate failed\n" );
     }
     
-    strncpy(vstring,"",4);
+    snprintf(vstring, sizeof(vstring), "%s", "");
     bReturn = !CNearTreeImmediateInsert(tree,vstring, NULL);
     if (!bReturn)
     {
