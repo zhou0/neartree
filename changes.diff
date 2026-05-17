@@ -1,0 +1,13 @@
+diff --git a/CNearTreeTest.c b/CNearTreeTest.c
+index 1233d2c..a2f0682 100644
+--- a/CNearTreeTest.c
++++ b/CNearTreeTest.c
+@@ -2500,7 +2500,7 @@ void testStrings( void )
+         fprintf(stdout, "CNearTreeTest: testStrings: CNearTreeCreate failed\n" );
+     }
+
+-    strncpy(vstring,"",4);
++    snprintf(vstring, sizeof(vstring), "%s", "");
+     bReturn = !CNearTreeImmediateInsert(tree,vstring, NULL);
+     if (!bReturn)
+     {
