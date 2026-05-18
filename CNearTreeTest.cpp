@@ -150,7 +150,7 @@ int main(int argc, char* argv[])
     for( int i=1; i<10; ++i )
     {
         char tagstring[40];
-        sprintf(tagstring,"testLinearTree %d",i);
+        snprintf(tagstring, sizeof(tagstring), "testLinearTree %d", i);
         testLinearTree( i );
     }
 
